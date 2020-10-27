@@ -1,5 +1,3 @@
-# Calvo_Ventura_LAPS_2021: Will I Get Covid?
-
 # Replication Materials
 
 Replication materials for "Will I Get Covid? Partisanship, Social Media Frames, and Perceptions of Health Risk in Brazil" Ernesto Calvo and Tiago Ventura. Forthcoming in the Latin America Politics and Society. 
@@ -16,7 +14,7 @@ This README file provides an overview of the replications materials for the arti
 
 ## Codes
 
--`CV_analysis_descriptive.R`: Implements the first descriptive analysis of the paper. In particular, this code replicates the figures 1 and 2 of the main paper, and figure 6 and table 6 in the SIF. 
+- `CV_analysis_descriptive.R`: Implements the first descriptive analysis of the paper. In particular, this code replicates the figures 1 and 2 of the main paper, and figure 6 and table 6 in the SIF. 
 
 - `CV_analysis_diff_in_diff.R`: Replicates the diff-in-diff results for the Speech of Bolsonaro on risk perceptions. (table 1, figures 7 and 8).
 
