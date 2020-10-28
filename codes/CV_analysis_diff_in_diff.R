@@ -3,7 +3,7 @@
 # Authors: Calvo and Ventura
 # Last update: October 25
 # ------------------------------------------------------------------------------- #
-
+library(here)
 ## Instructions
 
 # This code reproduces the difference-in-difference analysis  of the paper "Will I Get Covid:
@@ -13,6 +13,7 @@
 
 # Download the data -------------------------------------------------------
 load(here("data", "CV_data.Rdata"))
+
 source(here("codes", "utils.R"))
 
 # Levels for Covid --------------------------------------------------------
@@ -24,7 +25,6 @@ levels_covid <- c( "Somewhat Likely"="Algo provável",
                    "Very Appropriate" = "Muito adequada", 
                    "Somewhat Unappropriate" = "Pouco adequada",
                    "Not Appropriate" = "Nada adequada")
-
 
 # Packages ----------------------------------------------------------------
 library(tidyverse)
@@ -39,7 +39,7 @@ library(broom)
 conflict_prefer("filter", "dplyr")
 conflict_prefer("select", "dplyr")
 
-
+levels(d$age)
 
 # Clean data --------------------------------------------------------------
 d_time <- d %>% 
@@ -70,7 +70,6 @@ d_time <-  d_time %>%
   mutate(id = fct_relevel(id, "Bolsonaro"))
 
 
-
 # Simple Models -----------------------------------------------------------
 
 
@@ -87,10 +86,6 @@ modgov_no = lm(as.numeric(covid_government) ~ diff_bin + id +
 # Models With Controls ----------------------------------------------------
 
 
-d_time <- d_time %>% mutate_at(vars(covid_job, covid_health, covid_government, 
-                          income, gender, age, education, work ), 
-                     ~ifelse(.x=="-999", NA, .x)) 
-
 modjob = lm(as.numeric(covid_job) ~ diff_bin + id + 
               diff_bin*id + age + income + gender + work, data=d_time)
 
@@ -106,9 +101,10 @@ modgov = lm(as.numeric(covid_government) ~ diff_bin + id +
 
 # Table 1 -----------------------------------------------------------------
 
-exclude = c(names(coef(modjob))[5:8])
+exclude = c(names(coef(modjob))[5:13])
 
 library(stargazer)
+summary(modjob)
 
 stargazer(modjob_no, modhealth_no, modgov_no, modjob, modhealth, modgov, 
           omit = exclude, 
@@ -126,10 +122,22 @@ stargazer(modjob_no, modhealth_no, modgov_no, modjob, modhealth, modgov,
                                "Post-March 23 x Independent Voters"), 
           out=here("outputs", "table_1.tex"))
 
-
-
-
-
+stargazer(modjob_no, modhealth_no, modgov_no, modjob, modhealth, modgov, 
+          omit = exclude, 
+          type="html",
+          intercept.bottom = FALSE, 
+          add.lines = list(c("Controls", "No", "No", "No", "Yes", "Yes", "Yes")), 
+          dep.var.labels.include = FALSE,
+          column.labels = c("Job Risk", "Health Risk","Government Assessment",
+                            "Job Risk", "Health Risk","Government Assessment"),
+          omit.stat = c("rsq", "f", "ser"), 
+          covariate.labels = c("Intercept", 
+                               "Post-March 23", 
+                               "Haddad Voters", 
+                               "Independent Voters", 
+                               "Post-March 23 x Haddad Voters", 
+                               "Post-March 23 x Independent Voters"), 
+          out=here("outputs", "table_1.doc"))
 
 
 # Placebo: Figure 8 -----------------------------------------------------------------

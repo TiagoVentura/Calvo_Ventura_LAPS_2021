@@ -259,7 +259,7 @@ ggplot(outcomes_reduced, aes(y=estimate, x=label,
   geom_pointrange(shape=21, fill="white", size=2) +
   labs(x="", y="Point Estimates", 
        title = "\nPartisanship, Risk Perceptions and Government Responses to Covid in Brazil", 
-       subtitle = "Regression Estimates with Controls by Gender, Age, Education, and Occupation.", 
+       subtitle = "Regression Estimates with Controls by Income, Gender, Age, Education, and Occupation.", 
        caption ="Note: Positive point-estimates when respondents show greater support \n for the government, or higher risk of losing their jobs or being infected by COVID-19") +
   geom_hline(yintercept = 0, linetype="dashed", color="darkred") + 
   scale_color_manual(values=c("Bolsonaro"=pal[9], "Haddad   "=pal[1], 
@@ -353,7 +353,7 @@ ggplot(outcomes_reduced, aes(y=estimate, x=fct_rev(label),
   geom_pointrange(shape=21, fill="white", size=2) +
   labs(x="", y="Point Estimates", 
        title = "\nNegative Partisanship and Risk Perceptions to Covid-19", 
-       subtitle = "Regression Estimates with Controls by Gender, Age, Education, and Occupation.", 
+       subtitle = "Regression Estimates with Controls by Income, Gender, Age, Education, and Occupation.", 
        caption ="Note: Positive point-estimates when respondents show greater support \n for the government, or higher risk of losing their jobs or being infected by COVID-19") +
   geom_hline(yintercept = 0, linetype="dashed", color="darkred") + 
   scale_color_manual(values=c("Anti-Petistas"=pal[9], "Petistas"=pal[1], 
@@ -396,5 +396,28 @@ stargazer(models_complete[[1]],
                                "Education", 
                                "Age"), 
           out=here("outputs", "table_6.tex"))
+
+stargazer(models_complete[[1]],
+          models_complete[[2]], 
+          models_complete[[3]], 
+          models_complete_ng[[1]], 
+          models_complete_ng[[2]], 
+          models_complete_ng[[3]], 
+          intercept.bottom = FALSE, 
+          dep.var.labels.include = FALSE,
+          column.labels = c("Job Risk", "Health Risk","Government Assessment",
+                            "Job Risk", "Health Risk","Government Assessment"),
+          omit.stat = c("rsq", "f", "ser"), 
+          covariate.labels = c("Intercept", "Voters Haddad", 
+                               "Voters Independents", 
+                               "Petistas", 
+                               "Others (Non-Partisans)", 
+                               "Income", 
+                               "Gender:Male", 
+                               "Employed", 
+                               "Education", 
+                               "Age"), 
+          type="html",
+          out=here("outputs", "table_6.doc"))
 
 
