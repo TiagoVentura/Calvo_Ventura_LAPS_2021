@@ -183,12 +183,18 @@ ggplot(models_job, aes(y=estimate, x=placebo,
        y=" Effect comparing Opposition versus Bolsonaro's Supporters", 
        x="Days")  +
   scale_fill_discrete(name="", limits=c("Presidential Official Prounoucements on TV"))+
-  theme(axis.text.x = element_text(size = 10), 
+  theme(axis.text.x = element_text(size = 10),
+        axis.title.y =  element_text(size = 16),
         legend.position = "bottom")
+
+
 
 ggsave(filename=here("outputs", "figure8_up.png"), 
        width = 14, height = 8, units = "in", pointsize = 12, bg = "white")
 
+
+# ggsave(filename=here("outputs", "figure8_up.tiff"), 
+#        width = 14, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")
 
 models_health  <- map_df(d_list, function(data) lm(as.numeric(covid_health) ~ diff_bin + id + 
                                                   diff_bin*id + age + income + gender + work, data=data) %>% 
@@ -216,11 +222,15 @@ ggplot(models_health, aes(y=estimate, x=placebo,
        x="Days")  +
   scale_fill_discrete(name="", limits=c("Presidential Official Prounoucements on TV"))+
   theme(axis.text.x = element_text(size = 10), 
+        axis.title.y =  element_text(size = 16),
         legend.position = "bottom")
 
 ggsave(filename=here("outputs", "figure8_bottom.png"), 
        width = 14, height = 8, units = "in", pointsize = 12, bg = "white")
 
+# 
+# ggsave(filename=here("outputs", "figure8_bottom.tiff"), 
+#        width = 14, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")
 
 
 # Randomization Inference: Figure 9 ----------------------------------
@@ -272,3 +282,6 @@ summary(ri2_out)
 ggsave(here("outputs","ri_diff.png"), 
        width = 12, height = 8, units = "in", pointsize = 12, bg = "white")
 
+
+# ggsave(here("outputs","ri_diff.tiff"), 
+#        width = 12, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")

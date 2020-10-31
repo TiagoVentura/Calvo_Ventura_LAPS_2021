@@ -116,7 +116,9 @@ graph_covid <- ((plot_health / plot_job) | plot_gov) +
 
 ggsave(plot=graph_covid, filename=here("outputs", "figure1.png"), 
        width = 14, height = 8, units = "in", pointsize = 12, bg = "white")
-
+# 
+# ggsave(plot=graph_covid, filename=here("outputs", "figure1.tiff"), 
+#        width = 14, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")
 
 
 # Figure 6  ---------------------------------------------------------------
@@ -198,6 +200,9 @@ graph_covid <- ((plot_health / plot_job) | plot_gov) +
 ggsave(plot=graph_covid, filename=here("outputs", "figure_6.png"), 
        width = 14, height = 8, units = "in", pointsize = 12, bg = "white")
 
+# 
+# ggsave(plot=graph_covid, filename=here("outputs", "figure_6.tiff"), 
+#        width = 14, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")
 
 
 # Figure 2 -------------------------------------------------------------
@@ -271,6 +276,8 @@ ggplot(outcomes_reduced, aes(y=estimate, x=label,
 ggsave(filename=here("outputs", "figure2_up.png"), 
         width = 12, height = 8, units = "in", pointsize = 12, bg = "white")
 
+ggsave(filename=here("outputs", "figure2_up.tiff"), 
+       width = 12, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")
 
 # Complete model
 
@@ -364,7 +371,9 @@ ggplot(outcomes_reduced, aes(y=estimate, x=fct_rev(label),
 
 ggsave(filename=here("outputs", "figure2_bottom.png"), 
        width = 12, height = 8, units = "in", pointsize = 12, bg = "white")
-
+# 
+# ggsave(filename=here("outputs", "figure2_bottom.tiff"), 
+#        width = 12, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")
 
 
 # Table 6 -----------------------------------------------------------------
@@ -396,28 +405,28 @@ stargazer(models_complete[[1]],
                                "Education", 
                                "Age"), 
           out=here("outputs", "table_6.tex"))
-
-stargazer(models_complete[[1]],
-          models_complete[[2]], 
-          models_complete[[3]], 
-          models_complete_ng[[1]], 
-          models_complete_ng[[2]], 
-          models_complete_ng[[3]], 
-          intercept.bottom = FALSE, 
-          dep.var.labels.include = FALSE,
-          column.labels = c("Job Risk", "Health Risk","Government Assessment",
-                            "Job Risk", "Health Risk","Government Assessment"),
-          omit.stat = c("rsq", "f", "ser"), 
-          covariate.labels = c("Intercept", "Voters Haddad", 
-                               "Voters Independents", 
-                               "Petistas", 
-                               "Others (Non-Partisans)", 
-                               "Income", 
-                               "Gender:Male", 
-                               "Employed", 
-                               "Education", 
-                               "Age"), 
-          type="html",
-          out=here("outputs", "table_6.doc"))
-
-
+# 
+# stargazer(models_complete[[1]],
+#           models_complete[[2]], 
+#           models_complete[[3]], 
+#           models_complete_ng[[1]], 
+#           models_complete_ng[[2]], 
+#           models_complete_ng[[3]], 
+#           intercept.bottom = FALSE, 
+#           dep.var.labels.include = FALSE,
+#           column.labels = c("Job Risk", "Health Risk","Government Assessment",
+#                             "Job Risk", "Health Risk","Government Assessment"),
+#           omit.stat = c("rsq", "f", "ser"), 
+#           covariate.labels = c("Intercept", "Voters Haddad", 
+#                                "Voters Independents", 
+#                                "Petistas", 
+#                                "Others (Non-Partisans)", 
+#                                "Income", 
+#                                "Gender:Male", 
+#                                "Employed", 
+#                                "Education", 
+#                                "Age"), 
+#           type="html",
+#           out=here("outputs", "table_6.doc"))
+# 
+# 

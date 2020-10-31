@@ -17,6 +17,7 @@ library(extrafont)
 library(broom)
 library(tidyr)
 library(here)
+library(stargazer)
 conflict_prefer("filter", "dplyr")
 conflict_prefer("select", "dplyr")
 
@@ -26,7 +27,7 @@ load(here("data", "CV_data.Rdata"))
 source(here("codes", "utils.R"))
 
 # Models ------------------------------------------------------------------
-
+treatment_framing = d
 # Split Samples -----------------------------------------------------------
 
 d_haddad <- treatment_framing %>% 
@@ -177,6 +178,9 @@ ggplot(results_bind,
 
 ggsave(filename=here("outputs", "figure_3.png"), 
        width = 12, height = 8, units = "in", pointsize = 12, bg = "white")
+# 
+# ggsave(filename=here("outputs", "figure_3.tiff"), 
+#        width = 12, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")
 
 # Extract p-values --------------------------------------------------------
 
@@ -233,8 +237,8 @@ ggplot(res_all,aes(x=var1,y=fct_rev(var2),fill=pvalueid))+
   geom_tile(colour="gray95",size=0.5, alpha=.8)+
   guides(fill=guide_legend(title="P-value"))+
   labs(x="",y="",
-       title="Partisan Responses and Risk Perceptions: \n",
-       subtitle="P-values for the Treatment Comparisons")+
+       title="",
+       subtitle="P-values for the pairwise comparisons across the frames")+
   scale_fill_manual(values=c("tomato2", "pink", "white")) +
   geom_text(aes(label = round(pvalue, 3))) +
   facet_grid(dv~subsample ) +
@@ -244,9 +248,14 @@ ggplot(res_all,aes(x=var1,y=fct_rev(var2),fill=pvalueid))+
 ggsave(filename=here("outputs", "figure_3_pvalue.png"), 
        width = 12, height = 8, units = "in", pointsize = 12, bg = "white")
 
+# 
+# ggsave(filename=here("outputs", "figure_3_pvalue.tiff"), 
+#        width = 12, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")
+
+
+
 # Negative Partisanship ----------------------------------------------------------------
 
-# H1
 ### Split Sample
 d_anti <- treatment_framing %>% 
   filter(str_detect(negative_partisanship, "Trabalhadores"), 
@@ -357,6 +366,9 @@ ggplot(results_bind,
 ggsave(filename=here("outputs", "figure_4.png"), 
        width = 12, height = 8, units = "in", pointsize = 12, bg = "white")
 
+# ggsave(filename=here("outputs", "figure_4.tiff"), 
+#        width = 12, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")
+
 #### P - Value
 
 # job
@@ -392,8 +404,8 @@ ggplot(res_all,aes(x=var1,y=fct_rev(var2),fill=pvalueid))+
   geom_tile(colour="gray95",size=0.5, alpha=.8)+
   guides(fill=guide_legend(title="P-value"))+
   labs(x="",y="",
-       title="Negative Partisanship and Risk Perceptions: \n",
-       subtitle="P-values for the Treatment Comparisons")+
+       title="",
+       subtitle="P-values for the pairwise comparisons across the frames")+
   scale_fill_manual(values=c("tomato2", "pink", "white")) +
   geom_text(aes(label = round(pvalue, 3))) +
   facet_grid(dv~subsample ) +
@@ -402,6 +414,9 @@ ggplot(res_all,aes(x=var1,y=fct_rev(var2),fill=pvalueid))+
 
 ggsave(filename=here("outputs", "figure_4_pvalue.png"), 
        width = 12, height = 8, units = "in", pointsize = 12, bg = "white")
+
+# ggsave(filename=here("outputs", "figure_4_pvalue.tiff"), 
+#        width = 12, height = 8, units = "in", pointsize = 12, dpi=300, bg = "white")
 
 
 
@@ -550,23 +565,23 @@ stargazer(modh_2, modh_1,
                   covariate.labels = c(var_tw),
                   out=here("outputs","table_2.tex"),  
                   notes.align = "l")
-
-stargazer(modh_2, modh_1,  
-          modj_2, modj_1, 
-          modg_2, modg_1, 
-          order=paste0("^", names_order, "$"),
-          intercept.bottom = FALSE, 
-          dep.var.caption = "",
-          dep.var.labels.include = FALSE,
-          column.labels   = c("Health Risks", "Job Risks", "Support for the Government"),
-          column.separate = c(2, 2, 2), 
-          omit.stat = c("rsq", "f", "ser"), 
-          title = "Regression Models: Effects of Anger on Risk and Support for the Government", 
-          label="autopsy",  
-          covariate.labels = c(var_tw),
-          type="html",
-          out=here("outputs","table_2.doc"),  
-          notes.align = "l")
+# 
+# stargazer(modh_2, modh_1,  
+#           modj_2, modj_1, 
+#           modg_2, modg_1, 
+#           order=paste0("^", names_order, "$"),
+#           intercept.bottom = FALSE, 
+#           dep.var.caption = "",
+#           dep.var.labels.include = FALSE,
+#           column.labels   = c("Health Risks", "Job Risks", "Support for the Government"),
+#           column.separate = c(2, 2, 2), 
+#           omit.stat = c("rsq", "f", "ser"), 
+#           title = "Regression Models: Effects of Anger on Risk and Support for the Government", 
+#           label="autopsy",  
+#           covariate.labels = c(var_tw),
+#           type="html",
+#           out=here("outputs","table_2.doc"),  
+#           notes.align = "l")
 
 
 
@@ -586,24 +601,24 @@ stargazer(anger,
           covariate.labels = c("Constant","Negative Bolsonaro", "Negative Haddad", "Positive Haddad"), 
           out=here("outputs", "table_8.tex"),  
           notes.align = "l")
-
-stargazer(anger, 
-          anger_b, 
-          anger_h, 
-          intercept.bottom = FALSE, 
-          dep.var.caption = "",
-          dep.var.labels.include = FALSE,
-          column.labels   = c("All Sample", "Bolsonaro Voters", "Haddad Voters"),
-          column.separate = c(1, 1, 1), 
-          omit.stat = c("rsq", "f", "ser"), 
-          title = "Regression Models: Effects of Anger on Risk and Support for the Government", 
-          label="autopsy",  
-          covariate.labels = c("Constant","Negative Bolsonaro", "Negative Haddad", "Positive Haddad"), 
-          out=here("outputs", "table_8.doc"),  
-          type="html", 
-          notes.align = "l")
-
-
+# 
+# stargazer(anger, 
+#           anger_b, 
+#           anger_h, 
+#           intercept.bottom = FALSE, 
+#           dep.var.caption = "",
+#           dep.var.labels.include = FALSE,
+#           column.labels   = c("All Sample", "Bolsonaro Voters", "Haddad Voters"),
+#           column.separate = c(1, 1, 1), 
+#           omit.stat = c("rsq", "f", "ser"), 
+#           title = "Regression Models: Effects of Anger on Risk and Support for the Government", 
+#           label="autopsy",  
+#           covariate.labels = c("Constant","Negative Bolsonaro", "Negative Haddad", "Positive Haddad"), 
+#           out=here("outputs", "table_8.doc"),  
+#           type="html", 
+#           notes.align = "l")
+# 
+# 
 
 
 
