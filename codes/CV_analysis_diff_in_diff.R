@@ -101,7 +101,7 @@ modgov = lm(as.numeric(covid_government) ~ diff_bin + id +
 
 # Table 1 -----------------------------------------------------------------
 
-exclude = c(names(coef(modjob))[5:13])
+exclude = c(names(coef(modjob))[5:12])
 
 library(stargazer)
 summary(modjob)
@@ -121,6 +121,7 @@ stargazer(modjob_no, modhealth_no, modgov_no, modjob, modhealth, modgov,
                                "Post-March 23 x Haddad Voters", 
                                "Post-March 23 x Independent Voters"), 
           out=here("outputs", "table_1.tex"))
+
 
 stargazer(modjob_no, modhealth_no, modgov_no, modjob, modhealth, modgov, 
           omit = exclude, 

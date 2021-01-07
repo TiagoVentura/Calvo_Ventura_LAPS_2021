@@ -1,6 +1,7 @@
 ## Utils
 
 # ggplot theme ------------------------------------------------------------
+library(tidyverse)
 RColorBrewer::display.brewer.all()
 my_font <- "Palatino Linotype"
 my_bkgd <- "white"
